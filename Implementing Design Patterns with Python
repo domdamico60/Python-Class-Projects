@@ -1,0 +1,58 @@
+import requests
+
+# this is the way to implement a Singleton Pattern in Python
+class SingletonURLHandler:
+    __instance = None
+
+    @staticmethod
+    def getInstance():
+        """ Static access method. """
+        if SingletonURLHandler.__instance == None:
+            SingletonURLHandler()
+        return SingletonURLHandler.__instance
+
+    def __init__(self, url):
+        self.url = url
+
+    def getResponse(self):
+        return requests.get(self.url + "random")
+
+    def formatResponse(self, response):
+        return "-->".join(response.text[3:].split('</b>'))
+
+
+URL = "http://labs.bible.org/api/?passage="
+
+my_instance = SingletonURLHandler(URL)
+
+print("To terminate the program, use 'exit'")
+
+while True:
+
+    print("-" * 30)
+
+    inp = input("For random facts, use 'random': ")
+
+    print("-" * 30)
+
+    if inp.lower() == "random":
+
+        # to fetch the result from the API
+
+        # requests.get needs a url
+
+        response = my_instance.getResponse()
+
+        proper_text = my_instance.formatResponse(response)
+
+        print(proper_text)
+
+    elif inp.lower() == "exit":
+
+        print("TERMINATING...")
+
+        break
+
+    else:
+
+        print("Use proper input")
