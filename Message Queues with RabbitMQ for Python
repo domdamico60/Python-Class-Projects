@@ -1,0 +1,19 @@
+# doing using the RabbitMQ libraries
+import pika
+import time
+# making the connection with the localhost
+connection = pika.BlockingConnection(
+    pika.ConnectionParameters(host='localhost'))
+# define the channel of connection
+channel = connection.channel()
+# declare the queue
+channel.queue_declare(queue='test')
+# using the for loop to send 0 to 9 number
+for i in range(10):
+    # publish the message
+    channel.basic_publish(exchange='', routing_key='test', body='My name is John Doe and I love Python! '+ str(i))
+    print(" My name is John Doe and I love Python! ",i)
+    # wait for 1 second
+    time.sleep(1)
+# close the connection
+connection.close()
