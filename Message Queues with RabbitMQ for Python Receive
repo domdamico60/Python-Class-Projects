@@ -1,0 +1,18 @@
+# doing using the RabbitMQ libraries
+import pika
+# making the connection with the localhost
+connection = pika.BlockingConnection(
+    pika.ConnectionParameters(host='localhost'))
+# define the channel of connection
+channel = connection.channel()
+# declare the queue
+channel.queue_declare(queue='test')
+# callback function is called when the receiver receives something
+def callback(ch, method, properties, body):
+    print("%r" % body)
+# define the consumer
+channel.basic_consume(
+    queue='test', on_message_callback=callback, auto_ack=True)
+print('Waiting for messages. To exit press CTRL+C')
+# start receiving messages from sender
+channel.start_consuming()
