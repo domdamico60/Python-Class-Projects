@@ -1,0 +1,31 @@
+import sys
+
+import os
+
+fileSpec: str = sys.argv[1]
+searchTest = sys.argv[2]
+replaceText = sys.argv[3]
+outFile = fileSpec + '.new'
+outPointer = open(outFile, 'w')
+inPointer = open(fileSpec, 'r')
+
+if len(sys.argv) != 4:
+    print("usage: modify.py fileSpec from to")
+    exit(1)
+
+input_file = sys.argv[1];
+from_string = sys.argv[2];
+to_string = sys.argv[3];
+
+f1 = open(input_file, 'r')
+
+f2 = open('input_file_temp', 'w')
+for line in f1:
+
+    f2.write(line.replace(from_string, to_string))
+f1.close()
+f2.close()
+
+if os.path.exists(input_file):
+    os.remove(input_file)
+    os.rename('input_file_temp', input_file)
