@@ -1,0 +1,20 @@
+import xmlrpc.client
+import sys
+
+argumentsList = sys.argv
+hostAddress = '127.0.0.1'
+hostPort = '12345'
+
+URI = "http://" + hostAddress + ":" + hostPort
+
+num1 = int('7')
+num2 = int('5')
+proxy = xmlrpc.client.ServerProxy(URI)
+
+print('{} + {} is {}'.format(num1, num2, proxy.addition(num1, num2)))
+print('{} - {} is {}'.format(num1, num2, proxy.subtraction(num1, num2)))
+print('{} * {} is {}'.format(num1, num2, proxy.multiplication(num1, num2)))
+print('{} / {} is {}'.format(num1, num2, proxy.division(num1, num2)))
+print(proxy.name())
+print(proxy.helpMe())
+print(proxy.serverTime())
