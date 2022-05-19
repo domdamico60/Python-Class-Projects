@@ -1,0 +1,18 @@
+import requests
+URL = "http://labs.bible.org/api/?passage="
+print("To terminate the program, use 'exit'")
+while True:
+    print("-"*30)
+    inp = input("For random facts, use 'random': ")
+    print("-"*30)
+    if inp.lower()=="random":
+       #to fetch the result from the API
+       #requests.get needs a url
+        response = requests.get(URL+"random")
+        proper_text ="-->".join( response.text[3:].split('</b>'))
+        print(proper_text)
+    elif inp.lower()=="exit":
+        print("TERMINATING...")
+        break
+    else:
+        print("Use proper input")
